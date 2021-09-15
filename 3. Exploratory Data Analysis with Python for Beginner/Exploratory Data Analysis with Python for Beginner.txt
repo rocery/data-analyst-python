@@ -1,0 +1,145 @@
+python -m pip install [library]
+c:\python39\python.exe -m pip install --upgrade pip
+
+Numpy berasal dari kata ‘Numerical Python’, sesuai namanya NumPy berfungsi sebagai library untuk melakukan 
+proses komputasi numerik terutama dalam bentuk array multidimensional (1-Dimensi ataupun 2-Dimensi).
+Array merupakan kumpulan dari variabel yang memiliki tipe data yang sama.NumPy menyimpan data dalam bentuk arrays.
+
+*PANDAS*
+Pandas merupakan library yang memudahkan dalam melakukan manipulasi, cleansing maupun analisis struktur data. 
+Dengan menggunakan Pandas, dapat memanfaatkan lima fitur utama dalam pemrosesan dan analisis data, yaitu load, 
+prepare, manipulate, modelling, dan analysis data.
+Pandas menggunakan konsep array dari NumPy namun memberikan index kepada array tersebut, sehingga disebut series ataupun data frame. 
+Sehingga bisa dikatakan Pandas menyimpan data dalam dictionary-based NumPy arrays. 1-Dimensi labelled array dinamakan sebagai Series.
+Sedangkan 2-Dimensi dinamakan sebagai Data Frame.
+import pandas as pd
+[nama_variabel] = pd.read_csv("namaFile.csv")
+[nama_variabel] = pd.read_excel("namaFile.xlsx")
+
+Melihat preview data dari data frame
+Menampilkan konten teratas dari [nama_dataframe] untuk sejumlah bilangan bulat [jumlah_data]
+print([nama_dataframe].head([jumlah_data]))
+Menampilkan konten terbawah dari [nama_dataframe] untuk sejumlah bilangan bulat [jumlah_data]
+print([nama_dataframe].tail([jumlah_data]))
+Jika jumlah data dikosongkan, ditampilkan 5 data
+print([nama_dataframe].head())
+print([nama_dataframe].tail())
+print(order_df.head(10))
+
+describe() -> Menampilkan statistik deskriptif atau summary dalam Python
+Secara umum function describe() akan secara otomatis mengabaikan kolom category dan hanya memberikan
+summary statistik untuk kolom berjenis numerik.
+Kita perlu menambahkan argument bernama include = "all" untuk mendapatkan summary statistik atau statistik 
+deskriptif dari kolom numerik dan karakter.
+print([nama_dataframe].describe(include="all")) -> include="all" tidak wajib
+
+Jika ingin mendapatkan summary statistik dari kolom yang tidak bernilai angka, maka aku dapat menambahkan 
+command include=["object"] pada syntax describe().
+
+Selanjutnya, untuk mencari rataan dari suatu data dari dataframe dapat menggunakan syntax mean, median, dan mode dari Pandas.
+print([nama_dataframe].loc[:, "nama_kolom"].mean())
+print([nama_dataframe].loc[:, "nama_kolom"].median())
+print([nama_dataframe].loc[:, "nama_kolom"].mode())
+Contoh:
+print(nilai_score_df.loc[:, "Age"].mean())
+print(nilai_score_df.loc[:, "Score"].median())
+
+//Histogram
+Histogram merupakan salah satu cara untuk mengidentifikasi sebaran distribusi dari data
+Histogram adalah grafik yang berisi ringkasan dari sebaran (dispersi atau variasi) suatu data.
+Pada histogram, tidak ada jarak antar batang/bar dari grafik
+    Syntax Umum:
+    nama_datafram[["nama_kolom"]].hist(bins=jumlah_bin,
+    by=nama_kolom,
+    alpha=nilai_alpha,
+    figsize=tuple_ukuran_gambar)
+bins = jumlah_bins dalam histogram yang akan digunakan. Jika tidak didefinisikan jumlah_bins, 
+    maka function akan secara default menentukan jumlah_bins sebanyak 10.
+by = nama kolom di DataFrame untuk di group by. (valuenya berupa nama column di dataframe tersebut).
+alpha = nilai_alpha untuk menentukan opacity dari plot di histogram.
+    (value berupa range 0.0 - 1.0, dimana semakin kecil akan semakin kecil opacity nya)
+figsize = tuple_ukuran_gambar yang digunakan untuk menentukan ukuran dari plot histogram. Contoh: figsize=(10,12)
+
+//Standar Deviasi dan Varians pada Pandas
+Varians dan standar deviasi juga merupakan suatu ukuran dispersi atau variasi. 
+Standar deviasi merupakan ukuran dispersi yang paling banyak dipakai. Hal ini mungkin karena standar deviasi mempunyai satuan 
+ukuran yang sama dengan satuan ukuran data asalnya. Sedangkan varians memiliki satuan kuadrat dari data asalnya (misalnya cm^2).
+    Syntax umum:
+    print([nama_dataframe].loc[:, "nama_kolom"].std()) //standar variasi/deviasi
+    print([nama_dataframe].loc[:, "nama_kolom"].var()) //varian
+
+//Menemukan Outliers Menggunakan Pandas
+Outliers merupakan data observasi yang muncul dengan nilai-nilai ekstrim. Yang dimaksud dengan nilai-nilai 
+ekstrim dalam observasi adalah nilai yang jauh atau beda sama sekali dengan sebagian besar nilai lain dalam kelompoknya.
+Pada umumnya, outliers dapat ditentukan dengan metric IQR (interquartile range).
+Rumus dasar dari IQR: Q3 - Q1. Dan data suatu observasi dapat dikatakan outliers jika memenuhi kedua syarat dibawah ini:
+data < Q1 - 1.5 * IQR
+data > Q3 + 1.5 * IQR
+    Syntax Python
+    Q1 = nama_dataframe.quantile(0.25)
+    Q3 = nama_dataframe.quantile(0.75)
+    IQR = Q3 - Q1
+    print(IQR)
+
+    Contoh case pada nilai_skor_df
+    Q1 = nilai_skor_df[["Score"]].quantile(0.25)
+    Q3 = nilai_skor_df[["Score"]].quantile(0.75)
+    IQR = Q3 - Q1
+    print(IQR)
+    Hasil:
+    Age     3.0
+    Score   7.0
+    dtype: float64
+    Karena saat ini memiliki skor IQR, saatnya untuk menentukan Outliers.
+    Kode di bawah ini akan memberikan output dengan beberapa nilai True atau False.
+    Titik data di mana terdapat False yang berarti nilai-nilai ini valid sedangkan True menunjukkan adanya Outliers.
+    print((nilai_skor_df < (Q1 - 1.5*IQR)) | (nilai_skor_df > (Q3 + 1.5*IQR)))
+
+//Rename Kolom Data Frame
+1. Rename menggunakan nama kolom
+    Syntax:
+    nama_dataframe.rename(columns={"column_name_before": "column_name_afrer"}, inplace=True)
+    nilai_skor_df.rename(columns={"Age": "Umur"}, inplace=True)
+2. Rename menggunakan indeks kolom
+    Syntax:
+    nama_dataframe.columns.value[no_of_column] = "column_name_afrer"
+    nilai_skor_df.columns.value[0] = "Umur"
+
+//.groupby menggunakan Pandas
+Kegunaan .groupby adalah mencari summary dari data frame dengan menggunakan aggregate dari kolom tertentu.
+df["Score"].groupby([df["Name"]]).mean()
+Penjelasan: komputasi diatas menggunakan kolom ‘Name’ sebagai aggregate dan kemudian menggunakan 
+menghitung mean dari kolom ‘Score’ pada tiap - tiap aggregate tersebut.
+
+df["Score"].groupby([df["Name"], df["Exam"]]).mean()
+Penjelasan: komputasi diatas menggunakan kolom ‘Name’ dan ‘Exam’ sebagai aggregate dan kemudian
+menggunakan menghitung sum dari kolom ‘Score’ pada tiap - tiap aggregate tersebut.
+
+//Sorting Menggunakan Pandas
+Sorting adalah sebuah metode mengurutkan data berdasarkan syarat kolom tertentu, dan biasanya 
+digunakan untuk melihat nilai maksimum dan minimum dari dataset. Library Pandas sendiri menyediakan 
+fungsi sorting sebagai fundamental dari exploratory data analysis.
+    Syntax Umum:
+    nama_dataframe.sort_values(by="nama_kolom")
+    Contoh:
+    Sorting terhadap dataset nilai_skor_df berdasarkan age!
+    nilai_skor_df.sort_values(by="Age")
+    Untuk sorting dari yang terbesat ke yang terkecil
+    nilai_skor_df.sort_values(by="Age", ascending=False)
+    Sorting beberapa kolom
+    nilai_skor_df.sort_values(by=["Age", "Score"], ascending=[True, False])
+
+Scipy dibangun untuk bekerja dengan array NumPy dan menyediakan banyak komputasi numerik yang ramah pengguna dan efisien 
+seperti rutinitas untuk integrasi, diferensiasi dan optimasi numerik.
+
+Matplotlib merupakan library dari Python yang umum digunakan untuk visualisasi data. 
+Matplotlib memiliki kapabilitas untuk membuat visualisasi data 2-dimensional.
+Contoh visualisasi yang dapat dibuat dengan menggunakan matplotlib diantaranya adalah
+Line chart
+Bar chart
+Pie chart
+Box plot chart
+Violin chart
+Errorbar chart
+Scatter chart
+

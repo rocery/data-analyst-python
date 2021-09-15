@@ -1,0 +1,105 @@
+Ada beberapa istilah dan komponen di sebuah plot, nanti akan mempermudah mengingat function apa yang digunakan untuk memodifikasinya.
+Figure : adalah keseluruhan visualisasi yang kita plot dalam 1 kali menjalankan code.
+Sedangkan satu plot (yang dibuat saat memanggil .plot() atau .scatter()) disebut Axes. Sebuah Figure bisa terdiri dari beberapa Axes. 
+Setiap Axes biasanya memiliki sumbu-X (X-axis) dan sumbu-Y (Y-axis). Masing-masing sumbu memiliki komponen sebagai berikut:
+    Axis Label: Nama dari sumbu yang ditampilkan.
+    Tick: Penanda berupa titik/garis kecil yang berjajar di sumbu, sebagai referensi skala nilai.
+    Tick Label: Tulisan di tiap tick yang menyatakan nilainya.
+Untuk isi grafiknya sendiri, bisa berupa line (untuk line plot), atau marker (untuk scatter plot), 
+bisa juga bentuk lain seperti bar (untuk bar plot / histogram).
+Aksesoris lain yang bisa ditambahkan, di antaranya Grid untuk mempermudah melihat tick yang sejajar, 
+dan Text untuk memberikan informasi tambahan berbentuk teks di grafik.
+
+// Kostumisasi Title
+loc: digunakan untuk menentukan posisi title, misalnya ‘left’ untuk membuat rata kiri, 
+    ‘right’ untuk rata kanan, dan ‘center’ untuk meletakkannya di tengah. Jika tidak didefinisikan, maka defaultnya title ada di tengah.
+pad: digunakan untuk menambahkan jarak antara judul ke grafik (dalam satuan px), 
+    misalnya kita tidak ingin judulnya terlalu menempel dengan grafiknya, jadi kita beri jarak.
+fontsize: digunakan untuk mengganti ukuran font/huruf (dalam satuan px).
+color: digunakan untuk mengganti warna huruf judul. Kita bisa menggunakan warna 
+    dasar dengan kata seperti ‘blue’, ‘red’, ‘orange’, dsb. Bisa juga dengan hex string, misalnya '#42DDF5' untuk warna biru muda.
+
+// Kostumisasi Line dan Point
+color: mengubah warnanya (sama seperti di title)
+linewidth: mengubah ketebalan line/garisnya (dalam satuan px)
+linestyle: mengubah jenis dari garis. Misalnya '-' atau 'solid' untuk garis tak terputus (seperti pada default), '--' 
+    atau 'dashed' untuk garis putus-putus, ':' atau 'dotted' untuk garis berupa titik-titik, bisa juga '-.' atau ‘dashdot’ 
+    untuk garis dan titik bergantian.
+marker: mengubah tipe points/titik data di chart. Ada banyak sekali kemungkinan nilai untuk marker ini, yang biasanya 
+    digunakan yaitu ‘.’ untuk bulatan kecil/titik, ‘o’ untuk bulatan agak besar, ‘s’ untuk persegi, ‘D’ untuk diamond/wajik, 
+    dan bentuk-bentuk lain seperti ‘+’, ‘x’, ‘|’, ‘*’.
+
+// Pengaturan Parameter untuk Menyimpan Gambar
+dpi: Resolusi gambar (dots per inch). 
+quality: Kualitas gambar (hanya berlaku jika formatnya jpg atau jpeg), bisa diisi nilai 1 (paling buruk) hingga 95 (paling bagus).
+facecolor: Memberikan warna bagian depan figure, di luar area plot 
+edgecolor: Memberikan warna pinggiran gambar
+transparent: Jika nilainya True, maka gambarnya jadi transparan (jika filenya png)
+
+//Jenis-Jenis Visualisasi Data dan Tujuannya
+1. Perbandingan/Komparasi
+Jika ingin membandingkan suatu sekumpulan nilai dengan nilai lainnya, ingin melihat mana yang lebih besar, 
+mana yang lebih tinggi, mana yang naik, dsb. Untuk data yang terkait dengan waktu, visualisasi yang digunakan 
+biasanya berupa line-chart. Sedangkan, jika yang dibandingkan adalah kategorikal, maka lebih cocok menggunakan bar-chart.
+
+2. Distribusi
+Bila ingin melihat distribusi/persebaran data di suatu variabel. Visualisasi yang lazim digunakan adalah histogram. 
+Bisa melihat apakah datanya banyak terkumpul di nilai-nilai kecil, berat di kanan, atau simetris, ataupun berdistribusi normal. 
+Untuk melihat distribusi di dua variabel, scatterplot juga bisa digunakan.
+
+3. Komposisi
+Digunakan untuk melihat komposisi dari suatu variabel, jika di-breakdown terhadap suatu dimensi data. 
+Visualisasi yang biasa digunakan adalah stacked bar-chart untuk data kategorikal, atau stacked line-chart untuk data terkait waktu.
+
+4. Keterhubungan/Relasi
+Ketika ingin melihat keterhubungan antara suatu variabel dengan variabel lain. Misalnya ingin cek, jika variabel A semakin tinggi, 
+apakah variabel B juga semakin tinggi, atau justru lebih rendah, atau tidak ada keterhubungannya. Visualisasi yang biasa 
+digunakan untuk tujuan ini adalah scatter-plot.
+
+//Kustomisasi Legend
+Beberapa parameter yang bisa ditambahkan untuk legend:
+
+loc: untuk menentukan posisi legend, berikut beberapa lokasi legend yang bisa didefinisikan:
+    'upper left', 'upper right', 'lower left', 'lower right':legend diletakkan di pojok dari axes 
+    (atas kiri, atas kanan, bawah kiri, atas kiri)
+    'upper center', 'lower center', 'center left', 'center right': legend diletakkan di tepi axes 
+    (atas tengah, bawah tengah, tengah kiri, tengah kanan)
+    'center': legend diletakkan di tengah-tengah axes
+    'best': matplotlib akan memilih satu dari sekian kemungkinan lokasi legend di atas yang paling tidak overlap dengan isi grafik
+bbox_to_anchor: biasanya digunakan untuk adjust lokasi dari legend. Bisa berisi 2 angka yang menunjukkan 
+koordinat x dan y (misal (1.6,0.5) berarti geser 1.6 ke kanan dan 0.5 ke atas). Bisa juga berisi 4 angka, 
+angka ketiga dan keempat menyatakan width (lebar) dan height (tinggi) dari legend.
+shadow: jika diisi True, maka kotak legend akan memiliki bayangan.
+ncol: jumlah kolom dari isi legend, defaultnya adalah 1
+fontsize: ukuran huruf pada legend
+title: memberikan judul pada legend
+title_fontsize: ukuran huruf pada judul legend
+
+//Membuat Anotasi
+Untuk membuat annotate, gunakan function  plt.annotate. Parameter pertama adalah isi teksnya, dan parameter kedua 
+adalah koordinat dari point yang dianotasi.
+Selain itu ada beberapa parameter untuk anotasi yang bisa ditambahkan:
+xytext: Koordinat dari teks. Jika tidak diisi,maka teks akan diletakkan di koordinat point yang dianotasi (parameter kedua)
+arrowprops:Konfigurasi dari panah yang ditambahkan di anotasi, berupa dictionary. Beberapa hal yang bisa diset:
+    arrowstyle: menentukan bentuk dari panah penunjuk. Isinya bisa berupa bentuk seperti '->', '-|>', '<->', '-[', dsb. 
+    Bisa juga berupa tulisan seperti 'fancy', 'simple', 'wedge', etc.
+    connectionstyle: menentukan bentuk dari garis panahnya. Ada beberapa nilai yang bisa digunakan, misalnya 'arc' dan 
+    'arc3' yang berupa garis lurus, 'angle' untuk garis berbelok siku, 'angle3' untuk garis berbelok lengkung, atau 'bar' untuk 
+    berbelok siku dua kali.
+    color: menentukan warna dari panah
+
+//Membuat Pie Chart
+Misalnya  gmv_per_city_dki_q4,  masukkan datanya ke function plt.pie().
+Beberapa parameter yang bisa dimodifikasi:
+labels: array yang berisikan label/tulisan yang ditunjukkan untuk masing-masing bagian pie.
+colors: array yang berisikan warna untuk masing-masing bagian pie.
+autopct: format untuk nilai persentasi yang ditampilkan, bisa berupa string atau function.
+shadow: jika diisi True, maka ada bayangan untuk pie chart-nya. Defaultnya adalah False.
+radius: jari-jari dari pie-chart
+
+//Histogram 
+Menggunakan function plt.hist dan memasukkan variabel yang ingin dicek. Parameter lain yang bisa ditambahkan yaitu:
+bins: jumlah bin (kelompok nilai) yang diinginkan
+range: nilai minimum dan maksimum yang ditampilkan
+orientation: ‘horizontal’ atau ‘vertikal’
+color: warna bar di histogram

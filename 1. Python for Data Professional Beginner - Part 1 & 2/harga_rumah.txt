@@ -1,0 +1,4 @@
+tanah,bangunan,jarak_ke_pusat,harga
+70,50,15,500
+70,60,30,400
+70,60,55,300

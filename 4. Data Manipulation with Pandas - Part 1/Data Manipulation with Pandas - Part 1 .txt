@@ -1,0 +1,203 @@
+Pandas adalah library python open source yang biasanya digunakan untuk kebutuhan data analisis. 
+Pandas membuat Python supaya dapat bekerja dengan data yang berbentuk tabular seperti spreadsheet dengan 
+cara pemuatan data yang cepat, manipulasi data, menggabungkan data, serta ada berbagai fungsi yang lain.
+
+Series: satu kolom bagian dari tabel dataframe yang merupakan 1 dimensional numpy array 
+sebagai basis data nya, terdiri dari 1 tipe data (integer, string, float, dll).
+DataFrame: gabungan dari Series, berbentuk rectangular data yang merupakan tabel spreadsheet itu
+sendiri (karena dibentuk dari banyak Series, tiap Series biasanya punya 1 tipe data, yang artinya 1 dataframe bisa memiliki banyak tipe data).
+
+Atribut DataFrame & Series - Part 1
+1. Attribute .info() digunakan untuk mengecek kolom apa yang membentuk dataframe itu, 
+data types, berapa yang non null, dll. Attribute ini tidak dapat digunakan pada series, hanya pada data frame saja.
+nama_dataFrame.info()
+
+2. Attribute .shape digunakan untuk mengetahui berapa baris dan kolom, hasilnya dalam format tuple (baris, kolom).
+nama_dataFrame/nama_series.shape
+
+3. Attribute .dtypes digunakan untuk mengetahui tipe data di tiap kolom.
+Tipe data object: kombinasi untuk berbagai tipe data (number & text, etc).
+nama_dataFrame/nama_series.dtypes
+
+4. Attribute .astype(nama_tipe_data) untuk convert tipe data berdasarkan tipe data seperti: float, int, 
+str, numpy.float, numpy.int ataupun numpy.datetime.
+nama_dataFrame/nama_series.astype("str/float/dll")
+
+5. Attribute .copy() digunakan melakukan duplikat, untuk disimpan di variable yang berbeda mungkin supaya tidak loading data lagi.
+nama_dataFrame/nama_series.copy()
+
+6. Attribute .to_list() digunakan untuk mengubah series menjadi list dan tidak dapat digunakan untuk dataframe.
+nama_dataFrame/nama_series.to_list()
+
+7. Attribute .unique() digunakan menghasilkan nilai unik dari suatu kolom, hasilnya dalam bentuk numpy array.
+Attribute ini hanya digunakan pada series saja.
+nama_series.unique()
+
+8. Attribute .index digunakan untuk mencari index/key dari Series atau Dataframe.
+nama_dataFrame/nama_series.index
+
+9. Attribute .columns digunakan untuk mengetahui apa saja kolom yang tersedia di dataframe tersebut 
+(hanya digunakan untuk dataframe saja).
+nama_dataFrame.columns
+
+10. Attribute .loc digunakan slice dataframe atau series berdasarkan nama kolom dan/atau nama index.
+nama_dataFrame/nama_series.loc[0:1] -> menampilkan data pada kolom 0-1
+
+11. Attribute .iloc digunakan untuk slice dataframe atau series berdasarkan index kolom dan/atau index.
+nama_dataFrame/nama_series.iloc[0:1]
+
+*Creating Series & Dataframe from List*
+Untuk membuat Series atau Dataframe bisa dari berbagai macam tipe data container/mapping di python,
+seperti list dan dictionary, maupun dari numpy array.
+list merupakan sebuah kumpulan data berbagai macam tipe data, yang mutable (dapat diganti).
+
+*Creating Series & Dataframe from Dictionary*
+dictionary merupakan kumpulan data yang strukturnya terdiri dari key dan value.
+
+*Creating Series & Dataframe from Numpy Array*
+Pada sub bagian ini, akan membuat Series dan Dataframe yang bersumber dari numpy array. 
+Sekedar meninjau bahwa, numpy array kumpulan data yang terdiri atas berbagai macam tipe data, mutable, 
+tapi dibungkus dalam array oleh library Numpy.
+
+*Data yang Bisa Dibaca Pandas*
+CSV (Comma Separated Values), antar data dalam satu baris dipisahkan oleh comma, ",".
+TSV (Tab Separated Values), antar data dalam satu baris dipisahkan oleh "Tab".
+Excel
+Google BigQuery
+SQL Query
+JSON (Java Script Object Notation)
+
+*Read Dataset - CSV dan TSV*
+CSV dan TSV pada hakikatnya adalah tipe data text dengan perbedaan terletak pada pemisah antar 
+data dalam satu baris. Pada file CSV, antar data dalam satu baris dipisahkan oleh comma, ",".
+Namun, pada file TSV antar data dalam satu baris dipisahkan oleh "Tab".
+
+*Read Dataset - SQL*
+Fungsi .read_sql() atau .read_sql_query() digunakan untuk membaca query dari database dan translate 
+menjadi pandas dataframe, contoh case ini database sqlite.
+
+import mysql.connector
+import pandas as pd
+# Membuat koneksi db https://relational.fit.cvut.cz/dataset/Fiancial
+my_conn = mysql.connector.connect(host="relational.fit.cvut.cz",
+                                  port=3306,
+                                  user="guest",
+                                  passwd="relational",
+                                  database="financial",
+                                  use_pure=True)
+# Buat SQL untuk membaca tabel Loan
+my_querry = """
+SELECT *
+FROM loan;
+"""
+# Gunakan .read_sql_query untuk membaca tabel loan
+df_loan = pd.read_sql_query(my_querry, my_conn)
+# Tampilkan 5 data teratas
+df_load.head(5)
+
+# Jika menggunakan .read_sql()
+df_loan = pd.read_sql(my_querry, my_conn)
+# Tampilkan 5 data teratas
+df_load.head(5)
+
+*Read Dataset - Google BigQuery*
+Untuk data yang besar (big data), umumnya digunakan Google BigQuery. Layanan ini dapat 
+digunakan jika telah memiliki Google BigQuery account.
+Fungsi .read_gbq() digunakan untuk membaca Google BigQuery table menjadi dataframe pandas.
+
+import pandas as pd
+# Buat Querry
+query = """
+SELECT *
+FROM 'bigquery-public-data.covid19_jhu_csse_eu.summary'
+LIMIT 1000;
+"""
+# Baca data dari Google Big Querry
+df_covid19_eu_summary = pd.read_gbq(query, project_id="XXXXXXXX")
+# Tampilkan 5 data teratas
+df_covid19_eu_summary.head(5)
+# project_id="XXXXXXXX" adalah ID dari Google BigQuery account.
+
+*Write Dataset* / Menyimpan data
+.to_csv() → digunakan untuk export dataframe kembali ke csv atau tsv
+df.to_csv("csv1.csv", index=False)
+df.to_csv("tsv1.tsv", index=False, sep='\t')
+
+.to_clipboard() → export dataframe menjadi bahan copy jadi nanti bisa tinggal klik paste di excel atau google sheets
+df.to_clipboard()
+
+.to_excel() → export dataframe menjadi file excel
+df_excel.to_excel("xlsx1.xlsx", index=False)
+
+.to_gbq() → export dataframe menjadi table di Google BigQuery
+df.to_gbq("temp.test", project_id="XXXXXX", if_exists="fail")
+    temp: nama dataset,
+    test: nama table
+    if_exists: ketika tabel dengan dataset.table_name yang sama sudah ada, apa action yang ingin dilakukan
+    ("fail": tidak melakukan apa-apa,
+    "replace': membuang tabel yang sudah ada dan mengganti yang baru,
+    "append": menambah baris di tabel tersebut dengan data yang baru
+    )
+
+*Head & Tail*
+[nama_dataframe].head(n) //Menampilkan data teratas dengan jumlah n
+[nama_dataframe].tail(n) //Menampilkan data terbawah dengan jumlah n
+
+*Indexing*
+Index merupakan key identifier dari tiap row/column untuk Series atau Dataframe (sifatnya tidak mutable untuk 
+masing-masing value tapi bisa diganti untuk semua value sekaligus).
+Kolom index dapat terdiri dari
+1. satu kolom (single index), atau
+2. multiple kolom (disebut dengan hierarchical indexing).
+
+*Slicing*
+Seperti artinya slicing adalah cara untuk melakukan filter ke dataframe/series berdasarkan kriteria
+tertentu dari nilai kolomnya ataupun kriteria index-nya.
+Terdapat 2 cara paling terkenal untuk slicing dataframe, yaitu dengan menggunakan method .loc dan .iloc pada variabel 
+bertipe pandas DataFrame/Series. Method .iloc ditujukan untuk proses slicing berdasarkan index berupa nilai integer tertentu. 
+Akan tetapi akan lebih sering menggunakan dengan method .loc karena lebih fleksibel.
+
+*Transforming*
+Transform adalah mengubah dataset yang ada menjadi entitas yang baru:
+1. konversi dari satu data type ke data type yang lain
+2. tranpose dataframe; atau yang lainnya
+
+Hal yang biasa dilakukan pertama kali setelah data dibaca adalah mengecek tipe data di setiap kolomnya 
+apakah sesuai dengan representasinya. Untuk itu dapat menggunakan attribut .dtypes pada dataframe yang telah kita baca tadi,
+[nama_dataframe].dtypes
+// .to_datetime(namaDataFrame["namaKolom"])
+nama_dataframe["nama_kolom"] = pd.to_datetime(nama_dataframe["nama_kolom"]) // Contoh konversi data type
+// .to_numeric()
+nama_dataframe["nama_kolom"] = pd.to_numeric(nama_dataframe["nama_kolom"], downcast="tipe_data_baru")
+// Sedangkan untuk menjadi suatu kolom yang dapat dinyatakan sebagai kategory dapat menggunakan method .astype() pada dataframe, yaitu
+nama_dataframe["nama_kolom"] = nama_dataframe["nama_kolom"].astype("category")
+// Method .apply() digunakan untuk menerapkan suatu fungsi python (yang dibuat dengan def atau anonymous dengan lambda) 
+   pada dataframe/series atau hanya kolom tertentu dari dataframe.
+df["brand"] = df["brand"].apply(lambda x: x.lower())
+// Method .map() hanya dapat diterapkan pada series atau dataframe yang diakses satu kolom saja. 
+   Method ini digunakan untuk mensubstitusikan suatu nilai ke dalam tiap baris datanya.
+df["brand"] = df["brand"].map(lambda x: x[-1])
+// .applymap()
+
+*Inspeksi Missing Value*
+# Cetak info dari df
+print(df.info())
+# Cetak jumlah missing value di setiap kolom
+mv = df.isna().sum()
+
+Terdapat beberapa cara untuk mengatasi missing value, antara lain:
+1. dibiarkan saja,
+2. hapus value itu, atau
+3. isi value tersebut dengan value yang lain (biasanya interpolasi, mean, median, etc)
+
+// Menghapus kolom/baris yang memiliki Nan
+nama_dataframe.dropna(axis=1, how="all")
+Pada method .dropna() ada dua keyword argumen yang harus diisikan yaitu axis dan how.
+Keyword axis digunakan untuk menentukan arah dataframe yang akan dibuang angka 1 untuk menyatakan kolom (column-based) 
+atau dapat ditulis dalam string "column". Jika digunakan angka 0 berarti itu dalam searah index (row-based) atau dapat 
+ditulis dalam string "index".
+"all" artinya jika seluruh data di satu/beberapa kolom atau di satu/beberapa baris adalah missing value.
+"any" artinya jika memiliki 1 saja data yang hilang maka buanglah baris/kolom tersebut.
+
+df["province_state"] = df["province_state"].fillna("unknown_province_state")
+Fillna bisa diisi menggunakan statistik (mean, median), intepolasi data, atau teks tertentu

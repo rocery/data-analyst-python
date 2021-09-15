@@ -1,0 +1,103 @@
+*Merging (Penggabungan Series/Dataframe)*
+  1. append()
+    digunakan pada dataframe/series yang ditujukan untuk menambah row-nya saja.
+    df2_append_df1 = df2.append(df1)
+  2. concat()
+    digunakan pada dataframe yang ditujukan untuk penggabungan baik dalam row-wise (dalam arah ) atau column-wise.
+    row_wise_concat = pd.concat([df2, df1])
+    col_wise_concat = pd.concat([df2, df1], axis=1)
+    multiindex_concat = pd.concat([df2,df1], axis=0, keys=['df1','df2'])
+  3. merge()
+    menggabungkan Series/Dataframe yang bentuknya mirip dengan syntax join di SQL, specify left and right tables,
+    join key dan how to join (left, right, inner, full outer).
+    merge_df_left = pd.merge(left=df2, right=df1, how='left', left_on='key', right_on='key')
+    merge_df_right = pd.merge(left=df2, right=df1, how='right', left_on='key', right_on='key')
+    merge_df_inner = pd.merge(left=df2, right=df1, how='inner', left_on='key', right_on='key')
+    merge_df_outer = pd.merge(left=df2, right=df1, how='outer', left_on='key', right_on='key')
+    df_merge = p.merge(df1.reset_index(),df2.reset_index()) -> Jika terdapat lebih dari 1 index
+  4. join()
+    join_df = df1.set_index('key').join(df2.set_index('key'), how='outer')
+
+*Pivot*
+  Untuk menerapkan menerapkan method .pivot() pada dataframe dapat dilakukan pada dataframe 
+  yang miliki index tunggal ataupun indexnya adalah multiindex.
+    pivot1 = data.pivot(index='murid', columns='pelajaran', values='nilai') -> Pivot dengan spesifik value
+    pivot2 = data.pivot(index='murid', columns='pelajaran') -> Pivot tanpa spesifik value (semua kolom sisa akan dianggap value)
+  // Jika ada index yang sama pada satu dataframe dapat menggunakan fungsi aggfunc=sum/'mean'/'median'
+    pivot_tab_mean = data.pivot_table(index='kelas', columns='pelajaran', values='nilai', aggfunc='mean')
+    pivot_tab_median = data.pivot_table(index='kelas', columns='pelajaran', values='nilai', aggfunc='median')
+*Melt*
+  Teknik melt melalui pd.melt() digunakan untuk mengembalikan kondisi data yang sudah dilakukan pivot menjadi sebelum pivot.
+    data_pivot = data.pivot_table(index='kelas', columns='pelajaran', values='nilai', aggfunc='mean').reset_index()
+    data_melt_1 = pd.melt(data_pivot)
+    data_melt_2 = pd.melt(data_pivot, id_vars='kelas')
+    # [3.a] Melting dataframe data_pivot dengan value_vars
+    data_melt_3a = pd.melt(data_pivot, value_vars=['math'])
+    # [3.b] Melting dataframe data_pivot dengan id_vars dan value_vars
+    data_melt_3b = pd.melt(data_pivot, id_vars='kelas', value_vars=['math'])
+    # [4] Melting dataframe data_pivot dengan id_vars, value_vars, var_name. dan value_name
+    data_melt_4 = pd.melt(data_pivot, id_vars='kelas', value_vars=['english','math'], var_name='pelajaran', value_name='nilai')
+*Stack & Unstack*
+  Konsep stacking dan unstacking sama dengan melt dan pivot secara berurutan, hanya saja tidak memasukkan 
+  index sebagai parameter di stack/unstack tapi harus set index terlebih dahulu, baru bisa melakukan stacking/unstacking 
+  dengan level yang bisa ditentukan sendiri.
+    # Set index data untuk kolom kelas, murid, dan pelajaran
+    data = data.set_index(['kelas','murid','pelajaran'])
+    # [1] Unstacking dataframe
+    data_unstack_1 = data.unstack()
+    # [2] Unstacking dengan specify level name
+    data_unstack_2 = data.unstack(level='murid')
+    # [3] Unstacking dengan specify level position
+    data_unstack_3 = data.unstack(level=1)
+
+    # [1] Stacking dataframe
+    data_stack = data_unstack.stack()
+    # [2] Tukar posisi index setelah stacking dataframe
+    data_swap = data_unstack.swaplevel(1,2)
+    # [3] Melakukan sort_index pada stacking dataframe
+    data_sort = data_swap.sort_index()
+
+*Aggregation & GroupBy*
+  Basic Concept of Groupby & Aggregation
+    Split: melakukan indexing/multi-indexing dengan apa yang di specify as groupby menjadi kelompok
+    Apply: menerapkan fungsi pada masing-masing kelompok tersebut
+    Combine: mengumpulkan semua hasil fungsi dari tiap kelompok kembali menjadi dataframe
+
+*Time Series in Pandas*
+  Basic format datetime menurut ISO 8601 yaitu YYYY-mm-dd HH:MM:SS.
+    gaq = pd.read_csv('sample.csv', parse_dates=True, index_col='timestamp') -> Ketika load file
+    terdapat keyword argument 'parse_dates', yang jika di set True dan set index untuk kolom waktu tersebut maka 
+    kolom datetime tersebut akan transform as datetime Pandas dan menjadi index
+  Jika dataset yang telah terlebih dahulu atau telah terlanjur di load dengan pd.read_csv dan Pandas salah 
+  mengenali object datetime menjadi object string, maka dapat mengubah kolom tertentu dari dataset tersebut menjadi format datetime.
+    gaq['timestamp'] = pd.to_datetime(gaq['timestamp'])
+    gaq = gaq.set_index('timestamp')
+
+  *Resampling untuk Time Series Data*
+  [1] Downsampling
+  Mengurangi baris datetime menjadi frekuensi yang lebih lambat, bisa dibilang juga mengurangi rows dataset menjadi lebih sedikit
+  Contoh: mengubah kolom datetime yang awalnya daily menjadi monthly
+  [2] Upsampling
+  Kebalikan dari downsampling, menambah baris datetime menjadi frekuensi yang lebih cepat, menambah rows dataset dengan 
+  membuat kolom datetime menjadi lebih detail
+  Contoh: mengubah kolom datetime yang awalnya daily menjadi hourly
+  Tabel resampling untuk time series:
+  Input     Descripton
+  'Min','T' minute
+  'H'       hour
+  'D'       day
+  'B'       business day
+  'W'       week
+  'M'       month
+  'Q'       quarter
+  'A'       year
+
+  *Visualisasi*
+  Selanjutnya untuk memvisualisasikan dengan menggunakan library matplotlib dataframe yang telah diolah
+  (seperti yang telah dipelajari dari bab pertama hingga subbab sebelumnya di bab ini).
+    Terdapat beberapa plot styles yang dapat diterapkan dalam pembuatan visualisasi di matplotlib
+    Color   Marker    Line
+    b:blue  o:circle  :dotted
+    g:green *:star    -:dashed
+    r:red   s:square
+    c:cyan  +:plus

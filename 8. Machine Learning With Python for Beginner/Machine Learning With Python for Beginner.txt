@@ -1,0 +1,117 @@
+*Machine Learning*
+Metode
+1. Unsupervised Learning = Label atau output data tidak diketahui -> Clustering
+2. Supervised Learning = Label atau output data sudah diketahui - > 1. Classification 2. Regression
+
+//Supervised Learning
+// Data Preprocessing: Scaling
+sebelum memulai training model, kita terlebih dahulu perlu melakukan data rescaling ke dalam rentang 0 dan 1, 
+sehingga semua feature berada dalam rentang nilai tersebut, yaitu nilai max = 1 dan nilai min = 0. Data rescaling ini 
+dengan mudah dapat dilakukan di Python menggunakan .MinMaxScaler( ) dari Scikit-Learn library.
+z = xi - min(x) / max(x) - min(x)
+
+// Scikit-learn
+Scikit-learn adalah library untuk machine learning bagi para pengguna python yang memungkinkan kita 
+melakukan berbagai pekerjaan dalam Data Science, seperti regresi (regression), klasifikasi (classification), 
+pengelompokkan/penggugusan (clustering), data preprocessing, dimensionality reduction, dan model selection (pembandingan, 
+validasi, dan pemilihan parameter maupun model).
+
+// Evaluasi Modeel Performence - Classification
+Confusion Matrix
+True Positive (TP): Jika user diprediksi (Positif) membeli ([Revenue] = 1]), dan memang benar(True) membeli.
+True Negative (TN): Jika user diprediksi tidak (Negatif) membeli dan aktualnya user tersebut memang (True) membeli.
+False Positive (FP): Jika user diprediksi Positif membeli, tetapi ternyata tidak membeli (False).
+False Negatif (FN): Jika user diprediksi tidak membeli (Negatif), tetapi ternyata sebenarnya membeli.
+
+Accuracy = (TP + TN ) / (TP+FP+FN+TN)
+Precision = (TP) / (TP+FP)
+Recall = (TP) / (TP + FN)
+F1 Score = 2 * (Recall*Precission) / (Recall + Precission)
+
+Pakai Metrik yang Mana?
+Jika dataset memiliki jumlah data False Negatif dan False Positif yang seimbang (Symmetric), 
+maka bisa gunakan Accuracy, tetapi jika tidak seimbang, maka sebaiknya menggunakan F1-Score.
+
+Dalam suatu problem, jika lebih memilih False Positif lebih baik terjadi daripada False Negatif, 
+misalnya: Dalam kasus Fraud/Scam, kecenderungan model mendeteksi transaksi sebagai fraud walaupun kenyataannya bukan, 
+dianggap lebih baik, daripada transaksi tersebut tidak terdeteksi sebagai fraud tetapi ternyata fraud. Untuk problem ini 
+sebaiknya menggunakan Recall.
+
+Sebaliknya, jika lebih menginginkan terjadinya True Negatif dan sangat tidak menginginkan terjadinya False Positif, 
+sebaiknya menggunakan Precision.
+Contohnya adalah pada kasus klasifikasi email SPAM atau tidak. Banyak orang lebih memilih jika email yang sebenarnya 
+SPAM namun diprediksi tidak SPAM (sehingga tetap ada pada kotak masuk email kita), daripada email yang sebenarnya bukan SPAM 
+tapi diprediksi SPAM (sehingga tidak ada pada kotak masuk email).
+
+// Classification - Logistic Regression
+Logistic Regression merupakan salah satu algoritma klasifikasi dasar yang cukup popular. Secara sederhana, 
+Logistic regression hampir serupa dengan linear regression tetapi linear regression digunakan untuk Label atau 
+Target Variable yang berupa numerik atau continuous value, sedangkan Logistic regression digunakan untuk Label atau 
+Target yang berupa categorical/discrete value.
+
+Contoh continuous value adalah harga rumah, harga saham, suhu, dsb; dan contoh dari categorical value adalah 
+prediksi SPAM or NOT SPAM (1 dan 0) atau prediksi customer SUBSCRIBE atau UNSUBSCRIBED (1 dan 0).
+
+Logistic Regression hanya dapat mengolah data dengan tipe numerik. Pada saat preparasi data, 
+pastikan untuk mengecek tipe variabel yang ada dalam dataset dan pastikan semuanya adalah numerik, lakukan data 
+transformasi jika diperlukan.
+
+// Classification - Decision Tree
+Decision Tree merupakan salah satu metode klasifikasi yang populer dan banyak diimplementasikan serta mudah diinterpretasi. 
+Decision tree adalah model prediksi dengan struktur pohon atau struktur berhierarki. Decision Tree dapat digunakan untuk 
+classification problem dan regression problem.
+Decision Node paling atas dalam decision tree dikenal sebagai akar keputusan, atau feature utama yang menjadi asal mula percabangan. 
+Jadi, decision tree membagi data ke dalam kelompok atau kelas berdasarkan feature/variable input, yang dimulai dari 
+node paling atas (akar), dan terus bercabang ke bawah sampai dicapai cabang akhir atau leaf.
+
+// Regression - Linear Regression
+Regression merupakan metode statistik dan machine learning yang paling banyak digunakan. Seperti yang dijelaskan sebelumnya, 
+regresi digunakan untuk memprediksi output label yang berbentuk numerik atau continuous value. Dalam proses training, 
+model regresi akan menggunakan variabel input (features) dan variabel output (label) untuk mempelajari bagaimana hubungan/pola 
+dari variabel input dan output.
+Simple regression model → model regresi paling sederhana, hanya terdiri dari satu feature (univariate) dan 1 target.
+Multiple regression model → sesuai namanya, terdiri dari lebih dari satu feature (multivariate).
+
+Linear regression digunakan untuk menganalisis hubungan linear antara dependent variabel (feature) dan independent variabel (label). 
+Hubungan linear disini berarti bahwa jika nilai dari independen variabel mengalami perubahan baik itu naik atau turun, maka nilai dari 
+dependen variabel juga mengalami perubahan (naik atau turun).
+
+Perlu diketahui bahwa tidak semua problem dapat diselesaikan dengan linear regression. Untuk pemodelan dengan linear regression, 
+terdapat beberapa asumsi yang harus dipenuhi, yaitu :
+1. Terdapat hubungan linear antara variabel input (feature) dan variabel output(label). Untuk melihat hubungan linear feature dan label, 
+dapat menggunakan chart seperti scatter chart. Untuk mengetahui hubungan dari variabel umumnya dilakukan pada tahap eksplorasi data.
+2. Tidak ada multicollinearity antara features. Multicollinearity artinya terdapat dependency antara feature, misalnya saja hanya bisa 
+mengetahui nilai feature B jika nilai feature A sudah diketahui.
+3. Tidak ada autocorrelation dalam data, contohnya pada time-series data.
+
+// Regression Performance Evaluation
+Semakin kecil nilai MSE, RMSE, dan MAE, semakin baik pula performansi model regresi. Untuk menghitung nilai MSE, 
+RMSE dan MAE dapat dilakukan dengan menggunakan fungsi mean_squared_error () ,  mean_absolute_error () dari scikit-learn.metrics 
+dan untuk RMSE sendiri tidak terdapat fungsi khusus di scikit-learn tapi dapat dengan mudah kita hitung dengan terlebih dahulu 
+menghitung MSE kemudian menggunakan numpy module yaitu, sqrt() untuk memperoleh nilai akar kuadrat dari MSE.
+Mean Squared Error (MSE) adalah rata-rata dari squared error:
+Root Mean Squared Error (RMSE) adalah akar kuadrat dari MSE:
+Mean Absolute Error (MAE) adalah rata-rata dari nilai absolut error:
+
+
+// Unsupervised Learning
+Unsupervised Learning adalah teknik machine learning dimana tidak terdapat label atau output yang digunakan untuk melatih model. 
+Jadi, model dengan sendirinya akan bekerja untuk menemukan pola atau informasi dari dataset yang ada. 
+Metode unsupervised learning yang dikenal dengan clustering. Sesuai dengan namanya, Clustering memproses data 
+dan mengelompokkannya atau mengcluster objek/sample berdasarkan kesamaan antar objek/sampel dalam satu kluster, 
+dan objek/sample ini cukup berbeda dengan objek/sample di kluster yang lain.
+
+// K-Means Clustering
+K-Means merupakan tipe clustering dengan centroid based (titik pusat). Artinya kesamaan dari objek/sampel 
+dihitung dari seberapa dekat objek itu dengan centroid atau titik pusat.
+Jarak Manhattan di mana g = 1
+Jarak Euclidean di mana g = 2
+Jarak Chebychev di mana g = ∞
+Untuk menentukan centroid, pada awalnya perlu mendefinisikan jumlah centroid (K),semisalnya kita menetapkan jumlah K = 3; 
+maka pada awal iterasi, algorithm akan secara random menentukan 3 centroid. Setelah itu, objek/sample/data point yang lain 
+akan dikelompokkan sebagai anggota dari salah satu centroid yang terdekat
+
+// Measuring Cluster Criteria
+Clustering yang baik adalah cluster yang data point-nya saling rapat/sangat berdekatan satu sama lain dan cukup 
+berjauhan dengan objek/data point di cluster yang lain. Jadi, objek dalam satu cluster tidak tersebut berjauhan. 
+Nah, untuk mengukur kualitas dari clustering, kita bisa menggunakan .inertia_

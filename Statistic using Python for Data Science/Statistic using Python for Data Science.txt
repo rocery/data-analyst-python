@@ -37,3 +37,5 @@ Library statistika pada Python
 3. matplotlib : ploting atau penggambaran grafik
 4. statmodels : uji hipotesa, eksplorasi data maupun pemodelan statistika
 5. scipy : uji statistika, juga dapat digunakan untuk pemodelan statistika
+
+Proporsi kategori: adalah ukuran sebaran yang paling sederhana dari ukuran sebaran pada data nomisal dan ordinal.

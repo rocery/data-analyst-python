@@ -1,0 +1,39 @@
+Populasi : suatu unit yang diukur dengan data
+Contoh : Siswa, warga negara, hewan, kendaraan
+Populasi : koleksi dari keseluruhan observasi
+Contoh : Semua siswa yang ada di sekolah, semua kendaraan di Jakarta
+Sampel : sub koleksi dari populasi
+Contoh : 5 siswa dari masing-masing kelas di suatu sekolah, 3 jenis kendaraan di Jakarta
+
+Parameter : penjelasan atas populasi
+Contoh : segmentasi pasar, mengukur revenue dari setiap orang
+Parameter : menjelaskan sampel dari populasi
+Contoh : 20% segmentasi pasar
+
+Data Kualitatif : data yang diperoleh dari mengkategorikan atau menjelaskan suatu atribut dari populasi atau sampel.
+Contoh : warna rambut, golongan darah, nama jalan, nama produk
+Data kuantitatif : data yang diperoleh dari ukuran atau hitungan di suatu atribut atau sampel.
+Contoh : gaji, berat badan, populasi, jumlah pelanggan
+
+// Tipe Statistika
+Statistika deskriftif : digunakan untuk melakukan eksplorasi pada data, biasanya menggunakan teknik visualisasi data
+Statistika infersial : digunakan untuk mengambil keputusan atas suatu simpulan 
+
+// Skala pengukuran
+Skala nominal : digunakan untuk mengkategorikan suatu objek pengamatan dengan objek pengamatan lainnya.
+Contoh : gender, kategori barang, ras, status pernikahan
+Skala ordinal : digunakan untuk mengurutkan suatu objek pengamatan dimana suatu titik pengamatan memiliki nilai yang lebih rendah
+atau tinggi dibanding nilai lainnya.
+Contoh : kelas, jabatan, tingkat pendidikan
+
+Skala interval : digunakan untuk tidak hanya mengklasifikasikan maupun memberikan tingkatan pada suatu titik pengamatan, 
+namun kita dapat mengukur seberapa besar nilai antara suatu titik pengamatan dengan titik pengamatan lainnya.
+Contoh : suhu tubuh, jarak
+Skala rasio : memiliki kemiripan dengan skala interval, perbedaannya terletak pada nilai 0 skala rasio. 
+
+Library statistika pada Python
+1. numpy : analisa data numerik dan perhitungan berbasis vektor atau matriks
+2. pandas : pengolahan data tabular
+3. matplotlib : ploting atau penggambaran grafik
+4. statmodels : uji hipotesa, eksplorasi data maupun pemodelan statistika
+5. scipy : uji statistika, juga dapat digunakan untuk pemodelan statistika

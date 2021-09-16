@@ -38,4 +38,24 @@ Library statistika pada Python
 4. statmodels : uji hipotesa, eksplorasi data maupun pemodelan statistika
 5. scipy : uji statistika, juga dapat digunakan untuk pemodelan statistika
 
-Proporsi kategori: adalah ukuran sebaran yang paling sederhana dari ukuran sebaran pada data nomisal dan ordinal.
+Proporsi kategori: ukuran sebaran yang paling sederhana dari ukuran sebaran pada data nomisal dan ordinal.
+Rentang: jarak antara nilai maksimum dengan nilai minimum. Semakin besar jarang antara nilai maksimum dan minimum semakin besar pula sebaran datanya
+Variansi: ukuran sebaran pusat yang diperoleh dengan cara menghitung jarak antara tiap titik data pada sampel atau populasi dengan nilai mean.
+Deviasi Baku (Standard Deviation)
+Deviasi baku: ukuran sebaran pusat yang diperoleh dengan cara menarik akar kuadrat dari hasil perhitungan variansi.
+    Hal ini dilakukan karena nilai variansi umumnya memiliki nilai yang lebih besar daripada nilai aslinya sebagai efek dari 
+    pengkuadratan dan ini menjadikan variansi sulit untuk diinterpretasikan.
+Korelasi: salah satu metode statistika yang dapat digunakan untuk mengukur seberapa besar hubungan antara satu variabel dengan variabel lainnya.
+    1.Korelasi Pearson
+    2.Korelasi Spearman
+    3.Korelasi Kendall
+1. Korelasi Pearson atau sering juga disebut sebagai Pearson's product moment correlation adalah pengukuran korelasi parametrik 
+yang menghasilkan koefisien korelasi. Koefisien korelasi ini dapat digunakan untuk mengukur kekuatan hubungan atau asosiasi linier 
+antara dua variabel. Artinya jika hubungan kedua variabel tidak linier maka koefisien korelasi Pearson tidak dapat digunakan untuk 
+mengukur kekuatan hubungan antara kedua variabel.
+2. Korelasi Spearman atau sering juga disebut sebagai Spearman's rank correlation adalah pengukuran korelasi non-parametrik. 
+Artinya kita mencoba mengukur hubungan antara kedua variabel tanpa menghiraukan asumsi seperti distribusi dari kedua variabel dan 
+asumsi lainnya. Secara kriteria memiliki kemiripan dengan korelasi Pearson walau korelasi Spearman bisa digunakan untuk data bertipe ordinal. 
+Perbedaannya hanya terletak pada pengubahan data dalam bentuk ranking sebelum menghitung nilai korelasinya.
+3. Korelasi Kendall atau sering juga disebut juga sebagai Kendall's tank correlation atau korelasi Tau (τ) adalah pengukuran 
+korelasi non-parametrik.

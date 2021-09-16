@@ -32,3 +32,33 @@ print(raw_data[['Pendapatan', 'Harga']].agg([np.mean, np.median]))
  
 # menghitung rerata dan median Pendapatan dan Harga dari tiap produk
 print(raw_data[['Pendapatan', 'Harga', 'Produk']].groupby('Produk').agg([np.mean, np.median]))
+
+# cari proporsi tiap Produk
+print(raw_data['Produk'].value_counts()/raw_data.shape[0])
+
+# Cari nilai rentang dari kolom 'Pendapatan'
+print (raw_data['Pendapatan'].max() - raw_data['Pendapatan'].min())
+
+# menghitung variansi umur menggunakan method .var() dari pandas
+print (raw_data['Pendapatan'].var())
+ 
+# menghitung variansi umur menggunakan method .var() dari numpy
+print (np.var(raw_data['Pendapatan']))
+
+# mengatur variansi populasi dengan method `.var()` dari pandas
+print (raw_data['Pendapatan'].var(ddof=0))
+
+# menghitung deviasi baku sampel pendapatan menggunakan method std() dari pandas
+print (raw_data['Pendapatan'].std())
+ 
+# menghitung deviasi baku sampel pendapatan menggunakan method std() dari numpy
+print (np.std(raw_data['Pendapatan'], ddof = 1))
+
+# menghitung korelasi dari setiap pasang variabel pada raw_data
+print (raw_data.corr())
+
+# mencari korelasi 'kendall' untuk tiap pasang variabel
+print (raw_data.corr(method='kendall'))
+ 
+# mencari korelasi 'spearman' untuk tiap pasang variabel
+print (raw_data.corr(method='spearman'))

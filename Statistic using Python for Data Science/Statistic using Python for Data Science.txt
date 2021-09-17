@@ -59,3 +59,8 @@ asumsi lainnya. Secara kriteria memiliki kemiripan dengan korelasi Pearson walau
 Perbedaannya hanya terletak pada pengubahan data dalam bentuk ranking sebelum menghitung nilai korelasinya.
 3. Korelasi Kendall atau sering juga disebut juga sebagai Kendall's tank correlation atau korelasi Tau (τ) adalah pengukuran 
 korelasi non-parametrik.
+
+Regresi linier sederhana atau disebut juga sebagai regresi linier bivariat adalah model statistika yang digunakan untuk melakukan 
+estimasi nilai variabel dependen/variabel tak bebas dengan menggunakan satu variabel independen/variabel bebas. Dengan merumuskan 
+bahwa satu variabel memiliki pengaruh terhadap variabel lain, kita dapat mengukur seberapa besar dan signifikan variabel bebas dalam 
+menentukan nilai variabel tak bebas.

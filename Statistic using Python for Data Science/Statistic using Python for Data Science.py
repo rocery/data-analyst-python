@@ -1,7 +1,10 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
+import statsmodels.api as sm
 from scipy import stats
+from pandas.plotting import scatter_matrix
 raw_data = pd.read_csv("https://storage.googleapis.com/dqlab-dataset/dataset_statistic.csv", sep=';')
 
 # mengambil hanya data untuk produk 'A'
@@ -148,6 +151,56 @@ plt.title('plot.pie dari pandas', size=14)
 plt.tight_layout()
 plt.show()
 
+# Matriks Korelasi / hearmap / matshow
+# mengatur ukuran gambar/plot
+plt.rcParams['figure.dpi'] = 100
+
+plt.figure()
+plt.matshow(raw_data.corr())
+plt.title('Plot correlation matriks dengan .matshow', size=14)
+plt.tight_layout()
+plt.show()
+
+plt.figure()
+sns.heatmap(raw_data.corr(), annot=True)
+plt.title('Plot correlation matriks dengan sns.heatmap', size=14)
+plt.tight_layout()
+plt.show()
+
+# Boxplot
+plt.figure()
+# boxplot biasa tanpa pengelompokkan
+raw_data.boxplot(rot=90)
+plt.title('Boxplot tanpa pengelompokkan', size=14)
+plt.tight_layout()
+plt.show()
+
+plt.figure()
+# box plot dengan pengelompokkan dilakukan oleh kolom 'Produk'
+raw_data.boxplot(by='Produk')
+plt.tight_layout()
+plt.show()
+
+# Grouped Histogram
+plt.figure()
+raw_data[raw_data['Produk'] == 'B'].hist()
+plt.tight_layout()
+plt.show()
+
+# Hexbin plot
+plt.figure()
+raw_data.plot.hexbin(x='Pendapatan', y='Total', gridsize=25, rot=90)
+plt.tight_layout()
+plt.show()
+
+# Scatter Matrix Plot
+_, ax = plt.subplots(1, 1, figsize=(10,10))
+scatter_matrix(raw_data, ax=ax)
+plt.show()
+# Density plot
+_, ax = plt.subplots(1, 1, figsize=(10,10))
+scatter_matrix(raw_data, diagonal='kde', ax=ax)
+plt.show()
 # ------------------------Transformasi-------------------------
 plt.figure()
 raw_data.hist()
@@ -205,3 +258,16 @@ plt.show()
 # Transformasi Data Kategorik ke Dalam Angka
 data_dummy_produk = pd.get_dummies(raw_data['Produk'])
 print(data_dummy_produk)
+
+# -------------------Regresi Linear Sedehana-----------------------
+# variabel tak bebas
+nilai_Y = raw_data[['Total']]
+
+# variabel bebas
+nilai_X = raw_data['Pendapatan']
+
+# membuat model regresi linier
+model_regresi = sm.OLS(endog = nilai_Y, exog=nilai_X).fit()
+
+# melihat summary dari model
+model_regresi.summary()
